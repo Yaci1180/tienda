@@ -11,4 +11,5 @@ public interface AutoService {
     Auto saveAuto(Auto auto);
     Optional<Auto> findByNombre(String nombre);
     List<Auto> findAllByTipoDeAuto(TipoDeAuto tipoDeAuto);
+    Optional<Auto>findById(Long id);
 }

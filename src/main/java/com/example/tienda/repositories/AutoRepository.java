@@ -13,4 +13,5 @@ import java.util.Optional;
 public interface AutoRepository extends JpaRepository<Auto, Long> {
     Optional<Auto> findByNombreDelAuto(String nombreDelAuto);
     List<Auto> findAllByTipoDeAuto(TipoDeAuto tipoDeAuto);
+    Optional<Auto>findById (Long id);
 }

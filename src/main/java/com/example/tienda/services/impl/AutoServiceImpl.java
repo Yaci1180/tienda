@@ -1,12 +1,9 @@
 package com.example.tienda.services.impl;
 
 import com.example.tienda.model.Auto;
-import com.example.tienda.model.Empleado;
 import com.example.tienda.model.enums.TipoDeAuto;
 import com.example.tienda.repositories.AutoRepository;
-import com.example.tienda.repositories.EmpleadoRepository;
 import com.example.tienda.services.AutoService;
-import com.example.tienda.services.EmpleadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,5 +33,10 @@ public class AutoServiceImpl implements AutoService {
     @Override
     public List<Auto> findAllByTipoDeAuto(TipoDeAuto tipoDeAuto) {
         return autoRepository.findAllByTipoDeAuto(tipoDeAuto);
+    }
+
+    @Override
+    public Optional<Auto> findById(Long Id) {
+        return autoRepository.findById(Id);
     }
 }

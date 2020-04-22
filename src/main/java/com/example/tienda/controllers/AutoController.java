@@ -2,16 +2,17 @@ package com.example.tienda.controllers;
 
 import com.example.tienda.model.Auto;
 import com.example.tienda.model.Concesionaria;
+import com.example.tienda.model.enums.TipoDeAuto;
 import com.example.tienda.model.request.AutoRequest;
+import com.example.tienda.repositories.AutoRepository;
 import com.example.tienda.services.AutoService;
 import com.example.tienda.services.ConcesionariaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -19,11 +20,13 @@ public class AutoController {
 
     private final AutoService autoService;
     private final ConcesionariaService concesionariaService;
+    private final AutoRepository autoRepository;
 
     @Autowired
-    public AutoController(AutoService autoService, ConcesionariaService concesionariaService) {
+    public AutoController(AutoService autoService, ConcesionariaService concesionariaService, AutoRepository autoRepository) {
         this.autoService = autoService;
         this.concesionariaService = concesionariaService;
+        this.autoRepository = autoRepository;
     }
 
     @PutMapping(value = "/saveAuto")
@@ -38,10 +41,42 @@ public class AutoController {
         Auto auto = Auto.builder()
                 .nombreDelAuto(autoRequest.getNombreDelAuto())
                 .precio(autoRequest.getPrecio())
+                .id(autoRequest.getId())
                 .build();
 
         autoService.saveAuto(auto);
 
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @GetMapping("/verAuto")
+    public ResponseEntity<Auto> verAuto(@RequestBody AutoRequest autoRequest) {
+        Optional<Auto> auto = autoRepository.findById(autoRequest.getId());
+        if (!auto.isPresent()) {
+            throw new RuntimeException("Auto no encontrado con la id: " + autoRequest.getId());
+        }
+
+        return ResponseEntity.ok(auto.get());
+    }
+
+    @GetMapping("/verListaDeAutos")
+    public ResponseEntity<List<Auto>> verListaDeAutos() {
+        return ResponseEntity.ok(autoRepository.findAll());
+    }
+
+    @GetMapping("/verAutoPorTipo")
+    public  ResponseEntity<List<Auto>> verAutoPorTipo(TipoDeAuto tipoDeAuto) {
+        return ResponseEntity.ok(autoRepository.findAllByTipoDeAuto(tipoDeAuto));
+    }
+
+    @DeleteMapping
+    public ResponseEntity<?> deleteAuto(@RequestParam AutoRequest autoRequest) {
+        Optional<Auto> auto = autoRepository.findByNombreDelAuto(autoRequest.getNombreDelAuto());
+        if (!auto.isPresent()) {
+            throw new RuntimeException("Auto no econtrado ");
+        }
+
+        autoRepository.delete(auto.get());
+        return ResponseEntity.ok().build();
     }
 }

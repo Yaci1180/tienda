@@ -6,6 +6,7 @@ import lombok.*;
 @Builder@Getter @Setter @NoArgsConstructor@AllArgsConstructor
 
 public class AutoRequest {
+    private Long Id;
     private String nombreDelAuto;
     private double precio;
     private ConcesionariaResponse nombreDeConcesionaria;
