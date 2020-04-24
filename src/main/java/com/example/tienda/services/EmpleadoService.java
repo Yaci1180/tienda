@@ -9,4 +9,5 @@ public interface EmpleadoService {
 
     Empleado saveEmpleado(Empleado empleado);
     Optional<Empleado> findByDni(int dni);
+    void delete(Empleado empleado);
 }

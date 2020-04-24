@@ -30,4 +30,9 @@ public class EmpleadoServiceImpl implements EmpleadoService {
     public Optional<Empleado> findByDni(int dni) {
         return empleadoRepository.findByDni(dni);
     }
+
+    @Override
+    public void delete(Empleado empleado) {
+        empleadoRepository.delete(empleado);
+    }
 }

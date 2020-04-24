@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -21,13 +20,11 @@ public class AutoController {
 
     private final AutoService autoService;
     private final ConcesionariaService concesionariaService;
-    private final AutoRepository autoRepository;
 
     @Autowired
     public AutoController(AutoService autoService, ConcesionariaService concesionariaService, AutoRepository autoRepository) {
         this.autoService = autoService;
         this.concesionariaService = concesionariaService;
-        this.autoRepository = autoRepository;
     }
 
     @PutMapping(value = "/saveAuto")
@@ -52,7 +49,7 @@ public class AutoController {
 
     @GetMapping("/verAuto")
     public ResponseEntity<Auto> verAuto(@RequestBody AutoRequest autoRequest) {
-        Optional<Auto> auto = autoRepository.findById(autoRequest.getId());
+        Optional<Auto> auto = autoService.findById(autoRequest.getId());
         if (!auto.isPresent()) {
             throw new ResourceNotFoundException("Auto no encontrado con la id: " + autoRequest.getId());
         }
@@ -60,24 +57,19 @@ public class AutoController {
         return ResponseEntity.ok(auto.get());
     }
 
-    @GetMapping("/verListaDeAutos")
-    public ResponseEntity<List<Auto>> verListaDeAutos() {
-        return ResponseEntity.ok(autoRepository.findAll());
-    }
-
     @GetMapping("/verAutoPorTipo")
     public  ResponseEntity<List<Auto>> verAutoPorTipo(TipoDeAuto tipoDeAuto) {
-        return ResponseEntity.ok(autoRepository.findAllByTipoDeAuto(tipoDeAuto));
+        return ResponseEntity.ok(autoService.findAllByTipoDeAuto(tipoDeAuto));
     }
 
     @DeleteMapping
     public ResponseEntity<?> deleteAuto(@RequestParam Long autoId) {
-        Optional<Auto> auto = autoRepository.findById(autoId);
+        Optional<Auto> auto = autoService.findById(autoId);
         if (!auto.isPresent()) {
             throw new ResourceNotFoundException("Auto no econtrado ");
         }
 
-        autoRepository.delete(auto.get());
+        autoService.delete(auto.get());
         return ResponseEntity.ok().build();
     }
 

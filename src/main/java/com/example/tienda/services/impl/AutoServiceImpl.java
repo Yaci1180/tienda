@@ -1,6 +1,7 @@
 package com.example.tienda.services.impl;
 
 import com.example.tienda.model.Auto;
+import com.example.tienda.model.Empleado;
 import com.example.tienda.model.enums.TipoDeAuto;
 import com.example.tienda.repositories.AutoRepository;
 import com.example.tienda.services.AutoService;
@@ -38,5 +39,10 @@ public class AutoServiceImpl implements AutoService {
     @Override
     public Optional<Auto> findById(Long Id) {
         return autoRepository.findById(Id);
+    }
+
+    @Override
+    public void delete(Auto auto) {
+        autoRepository.delete(auto);
     }
 }

@@ -22,14 +22,13 @@ public class EmpleadoController {
 
     private final EmpleadoService empleadoService;
     private final ConcesionariaService concesionariaService;
-    private final EmpleadoRepository empleadoRepository;
 
     @Autowired
     public EmpleadoController(EmpleadoService empleadoService,
-                              ConcesionariaService concesionariaService, EmpleadoRepository empleadoRepository) {
+                              ConcesionariaService concesionariaService) {
         this.empleadoService = empleadoService;
         this.concesionariaService = concesionariaService;
-        this.empleadoRepository = empleadoRepository;
+
     }
 
     @PostMapping("/saveEmpleado")
@@ -71,7 +70,7 @@ public class EmpleadoController {
 
     @GetMapping("/verEmpleado")
     public ResponseEntity<Empleado> verEmpleado(@RequestBody EmpleadoRequest empleadoRequest) {
-        Optional<Empleado> empleado = empleadoRepository.findByDni(empleadoRequest.getDni());
+        Optional<Empleado> empleado = empleadoService.findByDni(empleadoRequest.getDni());
         if (!empleado.isPresent()) {
             throw new ResourceNotFoundException("Empleado no encontrado con el dni: " + empleadoRequest.getDni());
         }
@@ -79,19 +78,14 @@ public class EmpleadoController {
         return ResponseEntity.ok(empleado.get());
     }
 
-    @GetMapping("/verListaDeEmpleados")
-    public ResponseEntity<List<Empleado>> verListaDeEmpleados() {
-        return ResponseEntity.ok(empleadoRepository.findAll());
-    }
-
     @DeleteMapping
     public ResponseEntity<?> deleteEmpleado(@RequestParam int empleadoDni) {
-        Optional<Empleado> empleado = empleadoRepository.findByDni(empleadoDni);
+        Optional<Empleado> empleado = empleadoService.findByDni(empleadoDni);
         if (!empleado.isPresent()) {
             throw new ResourceNotFoundException("Empleado no econtrado ");
         }
 
-        empleadoRepository.delete(empleado.get());
+        empleadoService.delete(empleado.get());
         return ResponseEntity.ok().build();
     }
 }
