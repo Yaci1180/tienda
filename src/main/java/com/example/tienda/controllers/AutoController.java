@@ -1,5 +1,6 @@
 package com.example.tienda.controllers;
 
+import com.example.tienda.exceptions.ResourceNotFoundException;
 import com.example.tienda.model.Auto;
 import com.example.tienda.model.Concesionaria;
 import com.example.tienda.model.enums.TipoDeAuto;
@@ -53,7 +54,7 @@ public class AutoController {
     public ResponseEntity<Auto> verAuto(@RequestBody AutoRequest autoRequest) {
         Optional<Auto> auto = autoRepository.findById(autoRequest.getId());
         if (!auto.isPresent()) {
-            throw new RuntimeException("Auto no encontrado con la id: " + autoRequest.getId());
+            throw new ResourceNotFoundException("Auto no encontrado con la id: " + autoRequest.getId());
         }
 
         return ResponseEntity.ok(auto.get());
@@ -70,13 +71,14 @@ public class AutoController {
     }
 
     @DeleteMapping
-    public ResponseEntity<?> deleteAuto(@RequestParam AutoRequest autoRequest) {
-        Optional<Auto> auto = autoRepository.findByNombreDelAuto(autoRequest.getNombreDelAuto());
+    public ResponseEntity<?> deleteAuto(@RequestParam Long autoId) {
+        Optional<Auto> auto = autoRepository.findById(autoId);
         if (!auto.isPresent()) {
-            throw new RuntimeException("Auto no econtrado ");
+            throw new ResourceNotFoundException("Auto no econtrado ");
         }
 
         autoRepository.delete(auto.get());
         return ResponseEntity.ok().build();
     }
+
 }

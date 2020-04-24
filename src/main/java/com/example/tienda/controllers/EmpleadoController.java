@@ -1,5 +1,6 @@
 package com.example.tienda.controllers;
 
+import com.example.tienda.exceptions.ResourceNotFoundException;
 import com.example.tienda.model.Auto;
 import com.example.tienda.model.Concesionaria;
 import com.example.tienda.model.Empleado;
@@ -37,7 +38,7 @@ public class EmpleadoController {
         Optional<Concesionaria> concesionariaOptional = concesionariaService
                 .findByName(empleadoRequest.getNombre());
         if (!concesionariaOptional.isPresent()) {
-            throw new RuntimeException("Concesionaria inexistente");
+            throw new ResourceNotFoundException("Concesionaria inexistente");
         }
 
         Empleado empleado = Empleado.builder()
@@ -55,7 +56,7 @@ public class EmpleadoController {
     public ResponseEntity<?> actualizarEmpleado(@RequestBody @Valid EmpleadoRequest empleadoRequest) {
         Optional<Empleado> empleadoOptional = empleadoService.findByDni(empleadoRequest.getDni());
         if (!empleadoOptional.isPresent()) {
-            throw new RuntimeException("Empleado inexistente");
+            throw new ResourceNotFoundException("Empleado inexistente");
         }
 
         Empleado empleado = empleadoOptional.get();
@@ -72,7 +73,7 @@ public class EmpleadoController {
     public ResponseEntity<Empleado> verEmpleado(@RequestBody EmpleadoRequest empleadoRequest) {
         Optional<Empleado> empleado = empleadoRepository.findByDni(empleadoRequest.getDni());
         if (!empleado.isPresent()) {
-            throw new RuntimeException("Empleado no encontrado con el dni: " + empleadoRequest.getDni());
+            throw new ResourceNotFoundException("Empleado no encontrado con el dni: " + empleadoRequest.getDni());
         }
 
         return ResponseEntity.ok(empleado.get());
@@ -84,10 +85,10 @@ public class EmpleadoController {
     }
 
     @DeleteMapping
-    public ResponseEntity<?> deleteEmpleado(@RequestParam EmpleadoRequest empleadoRequest) {
-        Optional<Empleado> empleado = empleadoRepository.findByDni(empleadoRequest.getDni());
+    public ResponseEntity<?> deleteEmpleado(@RequestParam int empleadoDni) {
+        Optional<Empleado> empleado = empleadoRepository.findByDni(empleadoDni);
         if (!empleado.isPresent()) {
-            throw new RuntimeException("Empleado no econtrado ");
+            throw new ResourceNotFoundException("Empleado no econtrado ");
         }
 
         empleadoRepository.delete(empleado.get());
