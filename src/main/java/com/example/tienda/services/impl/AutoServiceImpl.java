@@ -42,7 +42,7 @@ public class AutoServiceImpl implements AutoService {
     }
 
     @Override
-    public void delete(Auto auto) {
+    public void deleteAuto(Auto auto) {
         autoRepository.delete(auto);
     }
 }

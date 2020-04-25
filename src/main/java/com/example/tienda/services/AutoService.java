@@ -13,6 +13,6 @@ public interface AutoService {
     Optional<Auto> findByNombre(String nombre);
     List<Auto> findAllByTipoDeAuto(TipoDeAuto tipoDeAuto);
     Optional<Auto>findById(Long id);
-    void delete(Auto auto);
+    void deleteAuto(Auto auto);
 
 }

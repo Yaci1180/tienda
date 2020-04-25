@@ -7,5 +7,6 @@ public class ContratoRequest {
 
     private Long numeroDeContrato;
     private int fecha;
-    private  String nombreContrato;
+    private String nombreContrato;
+    private Long autoId;
 }

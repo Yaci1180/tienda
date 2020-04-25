@@ -32,7 +32,7 @@ public class EmpleadoServiceImpl implements EmpleadoService {
     }
 
     @Override
-    public void delete(Empleado empleado) {
+    public void deleteEmpleado(Empleado empleado) {
         empleadoRepository.delete(empleado);
     }
 }

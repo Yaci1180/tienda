@@ -7,5 +7,6 @@ import lombok.*;
 public class ConcesionariaRequest {
 
     String nombreDeConcesionaria;
+
 }
 

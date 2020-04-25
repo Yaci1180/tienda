@@ -8,4 +8,5 @@ public interface ConcesionariaService {
 
     Concesionaria saveConcesionaria(Concesionaria concesionaria);
     Optional<Concesionaria> findByName(String nombreDeConcecionaria);
+    Optional<Concesionaria> findById(Long concesionariaId);
 }

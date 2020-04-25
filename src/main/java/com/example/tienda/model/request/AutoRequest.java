@@ -10,5 +10,5 @@ public class AutoRequest {
     private Long Id;
     private String nombreDelAuto;
     private double precio;
-    private ConcesionariaResponse nombreDeConcesionaria;
+    private String nombreDeConcesionaria;
 }

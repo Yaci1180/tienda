@@ -5,6 +5,7 @@ import com.example.tienda.model.Auto;
 import com.example.tienda.model.Concesionaria;
 import com.example.tienda.model.Empleado;
 import com.example.tienda.model.request.EmpleadoRequest;
+import com.example.tienda.model.response.EmpleadoResponse;
 import com.example.tienda.repositories.EmpleadoRepository;
 import com.example.tienda.services.ConcesionariaService;
 import com.example.tienda.services.EmpleadoService;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/empleados")
 public class EmpleadoController {
 
     private final EmpleadoService empleadoService;
@@ -32,7 +34,7 @@ public class EmpleadoController {
     }
 
     @PostMapping("/saveEmpleado")
-    public ResponseEntity<?> saveEmpleado(@RequestBody EmpleadoRequest empleadoRequest) {
+    public ResponseEntity<EmpleadoResponse> saveEmpleado(@RequestBody EmpleadoRequest empleadoRequest) {
 
         Optional<Concesionaria> concesionariaOptional = concesionariaService
                 .findByName(empleadoRequest.getNombre());
@@ -49,10 +51,10 @@ public class EmpleadoController {
 
         empleadoService.saveEmpleado(empleado);
 
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.ok(parseEmpleadoResponse(empleadoService.saveEmpleado(empleado)));
     }
     @PutMapping("/actualizarEmpleado")
-    public ResponseEntity<?> actualizarEmpleado(@RequestBody @Valid EmpleadoRequest empleadoRequest) {
+    public ResponseEntity<EmpleadoResponse> actualizarEmpleado(@RequestBody @Valid EmpleadoRequest empleadoRequest) {
         Optional<Empleado> empleadoOptional = empleadoService.findByDni(empleadoRequest.getDni());
         if (!empleadoOptional.isPresent()) {
             throw new ResourceNotFoundException("Empleado inexistente");
@@ -65,27 +67,36 @@ public class EmpleadoController {
 
         empleadoService.saveEmpleado(empleado);
 
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.ok(parseEmpleadoResponse(empleadoService.saveEmpleado(empleado)));
     }
 
     @GetMapping("/verEmpleado")
-    public ResponseEntity<Empleado> verEmpleado(@RequestBody EmpleadoRequest empleadoRequest) {
+    public ResponseEntity<EmpleadoResponse> verEmpleado(@RequestBody EmpleadoRequest empleadoRequest) {
         Optional<Empleado> empleado = empleadoService.findByDni(empleadoRequest.getDni());
         if (!empleado.isPresent()) {
             throw new ResourceNotFoundException("Empleado no encontrado con el dni: " + empleadoRequest.getDni());
         }
 
-        return ResponseEntity.ok(empleado.get());
+        return ResponseEntity.ok(parseEmpleadoResponse(empleado.get()));
     }
 
-    @DeleteMapping
-    public ResponseEntity<?> deleteEmpleado(@RequestParam int empleadoDni) {
-        Optional<Empleado> empleado = empleadoService.findByDni(empleadoDni);
+    @DeleteMapping("/deleteEmpleado")
+    public ResponseEntity<?> deleteEmpleado(@RequestBody EmpleadoRequest empleadoRequest) {
+        Optional<Empleado> empleado = empleadoService.findByDni(empleadoRequest.getDni());
         if (!empleado.isPresent()) {
             throw new ResourceNotFoundException("Empleado no econtrado ");
         }
 
-        empleadoService.delete(empleado.get());
+        empleadoService.deleteEmpleado(empleado.get());
         return ResponseEntity.ok().build();
+    }
+
+    private EmpleadoResponse parseEmpleadoResponse(Empleado empleado) {
+        return EmpleadoResponse.builder()
+                .nombre(empleado.getNombre())
+                .apellido(empleado.getApellido())
+                .dni(empleado.getDni())
+                .concesionariaId(empleado.getConcesionariaDondeTrabaja().getId())
+                .build();
     }
 }

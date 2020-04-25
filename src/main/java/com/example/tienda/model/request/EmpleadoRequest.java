@@ -10,5 +10,5 @@ public class EmpleadoRequest {
     private String nombre;
     private String apellido;
     private int dni;
-    private ConcesionariaResponse nombreDeConcesionaria;
+    private String nombreDeConcesionaria;
 }

@@ -27,4 +27,9 @@ public class ConcesionariaServiceImpl implements ConcesionariaService {
     public Optional<Concesionaria> findByName(String nombreDeConcecionaria) {
         return concesionariaRepository.findByNombreDeConcesionaria(nombreDeConcecionaria);
     }
+
+    @Override
+    public Optional<Concesionaria> findById(Long concesionariaId) {
+        return concesionariaRepository.findById(concesionariaId);
+    }
 }
