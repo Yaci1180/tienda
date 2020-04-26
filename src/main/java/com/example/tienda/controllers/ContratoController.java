@@ -31,7 +31,7 @@ public class ContratoController {
     }
 
     @PostMapping("/saveContrato")
-    public ResponseEntity<?> saveContrato(@RequestBody ContratoRequest contratoRequest) {
+    public ResponseEntity<ContratoResponse> saveContrato(@RequestBody ContratoRequest contratoRequest) {
 
         Optional<Auto> auto = autoService.findById(contratoRequest.getAutoId());
         if (!auto.isPresent()) {

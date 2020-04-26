@@ -15,8 +15,7 @@ public class Concesionaria {
     private Long id;
 
     private String nombreDeConcesionaria;
-
-
+    
     @OneToMany(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             mappedBy = "concesionariaDondeTrabaja")

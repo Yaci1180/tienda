@@ -17,6 +17,8 @@ public class Empleado {
     private String nombre;
     private String apellido;
     private int dni;
+    private int sueldo;
+    private int autosVendidos;
 
     @ManyToOne(fetch = FetchType.LAZY,
             cascade = CascadeType.PERSIST,

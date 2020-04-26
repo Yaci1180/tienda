@@ -11,4 +11,6 @@ public class EmpleadoRequest {
     private String apellido;
     private int dni;
     private String nombreDeConcesionaria;
+    private int sueldo;
+    private int cantidadDeAutosVendidos;
 }
