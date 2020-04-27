@@ -3,7 +3,9 @@ package com.example.tienda.controllers;
 import com.example.tienda.exceptions.ResourceNotFoundException;
 import com.example.tienda.model.Auto;
 import com.example.tienda.model.Concesionaria;
+import com.example.tienda.model.Empleado;
 import com.example.tienda.model.enums.TipoDeAuto;
+import com.example.tienda.model.enums.TipoDeEstado;
 import com.example.tienda.model.request.AutoRequest;
 import com.example.tienda.model.response.AutoResponse;
 import com.example.tienda.repositories.AutoRepository;
@@ -25,7 +27,7 @@ public class AutoController {
     private final ConcesionariaService concesionariaService;
 
     @Autowired
-    public AutoController(AutoService autoService, ConcesionariaService concesionariaService, AutoRepository autoRepository) {
+    public AutoController(AutoService autoService, ConcesionariaService concesionariaService) {
         this.autoService = autoService;
         this.concesionariaService = concesionariaService;
     }
@@ -66,6 +68,12 @@ public class AutoController {
         }
 
         return ResponseEntity.ok(autoResponses);
+    }
+
+    @GetMapping("/calcularPrecioVenta")
+    public ResponseEntity<Auto> calcularPrecioVenta(@RequestParam Long autoId) {
+
+        return ResponseEntity.ok(autoService.calcularPrecioVenta(autoId));
     }
 
     @DeleteMapping("/deleteAuto")

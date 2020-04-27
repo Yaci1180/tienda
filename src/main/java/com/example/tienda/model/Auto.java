@@ -2,6 +2,7 @@ package com.example.tienda.model;
 
 
 import com.example.tienda.model.enums.TipoDeAuto;
+import com.example.tienda.model.enums.TipoDeEstado;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,10 +18,15 @@ public class Auto {
 
     private String nombreDelAuto;
     private double precio;
+    private int kilometraje;
+    private int precioOriginal;
+    private int precioVenta;
 
     @Enumerated(EnumType.STRING)
     private TipoDeAuto tipoDeAuto;
 
+    @Enumerated(EnumType.STRING)
+    private TipoDeEstado tipoDeEstado;
 
     @ManyToOne(fetch = FetchType.LAZY,
             cascade = CascadeType.PERSIST,
