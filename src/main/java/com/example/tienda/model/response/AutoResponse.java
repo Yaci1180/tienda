@@ -10,5 +10,8 @@ public class AutoResponse {
     private String nombreDelAuto;
     private double precio;
     private Long concesionariaId;
+    private int kilometraje;
+    private double precioOriginal;
+    private double precioVenta;
 
 }

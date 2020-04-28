@@ -12,7 +12,7 @@ public class AutoRequest {
     private double precio;
     private String nombreDeConcesionaria;
     private int kilometraje;
-    private int precioOriginal;
-    private int precioVenta;
+    private double precioOriginal;
+    private double precioVenta;
 
 }

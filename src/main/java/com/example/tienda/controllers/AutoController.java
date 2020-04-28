@@ -41,13 +41,19 @@ public class AutoController {
             throw new ResourceNotFoundException("Concesionaria inexistente");
         }
 
+
         Auto auto = Auto.builder()
                 .nombreDelAuto(autoRequest.getNombreDelAuto())
                 .precio(autoRequest.getPrecio())
+                .precioOriginal(autoRequest.getPrecioOriginal())
+                .precioVenta(autoRequest.getPrecioVenta())
+                .kilometraje(autoRequest.getKilometraje())
                 .build();
 
         return ResponseEntity.ok(parseAutoResponse(autoService.saveAuto(auto)));
+
     }
+
 
     @GetMapping("/verAuto")
     public ResponseEntity<AutoResponse> verAuto(@RequestBody AutoRequest autoRequest) {
@@ -68,12 +74,6 @@ public class AutoController {
         }
 
         return ResponseEntity.ok(autoResponses);
-    }
-
-    @GetMapping("/calcularPrecioVenta")
-    public ResponseEntity<Auto> calcularPrecioVenta(@RequestParam Long autoId) {
-
-        return ResponseEntity.ok(autoService.calcularPrecioVenta(autoId));
     }
 
     @DeleteMapping("/deleteAuto")

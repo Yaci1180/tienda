@@ -19,8 +19,8 @@ public class Auto {
     private String nombreDelAuto;
     private double precio;
     private int kilometraje;
-    private int precioOriginal;
-    private int precioVenta;
+    private double precioOriginal;
+    private double precioVenta;
 
     @Enumerated(EnumType.STRING)
     private TipoDeAuto tipoDeAuto;

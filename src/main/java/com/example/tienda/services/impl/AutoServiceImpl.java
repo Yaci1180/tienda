@@ -1,10 +1,7 @@
 package com.example.tienda.services.impl;
 
-import com.example.tienda.exceptions.ResourceNotFoundException;
 import com.example.tienda.model.Auto;
-import com.example.tienda.model.Concesionaria;
 import com.example.tienda.model.enums.TipoDeAuto;
-import com.example.tienda.model.enums.TipoDeEstado;
 import com.example.tienda.repositories.AutoRepository;
 import com.example.tienda.services.AutoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +25,7 @@ public class AutoServiceImpl implements AutoService {
 
     @Override
     public Auto saveAuto(Auto auto) {
+        auto.setPrecioVenta(calcularPrecioVenta(auto));
         return autoRepository.save(auto);
     }
 
@@ -52,31 +50,25 @@ public class AutoServiceImpl implements AutoService {
     }
 
     @Override
-    public Auto calcularPrecioVenta(Long autoId) {
+    public double calcularPrecioVenta(Auto auto) {
 
-        int precioFinal;
+        double precioVentaFinal;
+        if (auto.getTipoDeEstado() == BUENO) {
+            double precioVenta = auto.getPrecioOriginal() - (auto.getPrecioOriginal() *((int) (auto.getKilometraje() /50000)) * 0.03);
+            precioVentaFinal = precioVenta - auto.getPrecioOriginal() * 0.10;
 
-        Optional<Auto> auto = findById(autoId);
-        if (!auto.isPresent()) {
-            throw new ResourceNotFoundException("Auto no encontrado con la id: " + autoId);
+        } else if (auto.getTipoDeEstado() == MEDIO) {
+            double precioVenta = auto.getPrecioOriginal() - (auto.getPrecioOriginal() *((int) (auto.getKilometraje() /50000)) * 0.03);
+            precioVentaFinal = precioVenta - auto.getPrecioOriginal() * 0.15;
+
         } else {
+            double precioVenta = auto.getPrecioOriginal() - (auto.getPrecioOriginal() *((int) (auto.getKilometraje() /50000))* 0.03);
+            precioVentaFinal = precioVenta - auto.getPrecioOriginal() * 0.25;
 
-            if (auto.get().getTipoDeEstado() == BUENO) {
-                int precioVenta = (int) (auto.get().getPrecioOriginal() - (auto.get().getPrecioOriginal() * (auto.get().getKilometraje() * 50000 * 0.03)));
-                precioFinal = (int) (precioVenta - auto.get().getPrecioOriginal() * 0.10);
+        }
 
-            } else if (auto.get().getTipoDeEstado() == MEDIO) {
-                int precioVenta = (int) (auto.get().getPrecioOriginal() - (auto.get().getPrecioOriginal() * (auto.get().getKilometraje() * 50000 * 0.03)));
-                precioFinal = (int) (precioVenta - auto.get().getPrecioOriginal() * 0.15);
-
-            } else {
-                int precioVenta = (int) (auto.get().getPrecioOriginal() - (auto.get().getPrecioOriginal() * (auto.get().getKilometraje() * 50000 * 0.03)));
-                precioFinal = (int) (precioVenta - auto.get().getPrecioOriginal() * 0.25);
-
-            }
-
-            auto.get().setPrecioVenta(precioFinal);
-            return auto.get();
+        auto.setPrecioVenta(precioVentaFinal);
+        return precioVentaFinal;
         }
     }
-}
+

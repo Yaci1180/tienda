@@ -51,5 +51,4 @@ public class ConcesionariaServiceImpl implements ConcesionariaService {
         }
         return total;
     }
-
 }
