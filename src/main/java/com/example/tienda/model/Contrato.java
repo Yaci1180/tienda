@@ -22,4 +22,9 @@ public class Contrato {
             mappedBy = "contrato")
     private Auto auto;
 
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade =  CascadeType.ALL,
+            mappedBy = "cliente")
+    private Cliente cliente;
+
 }

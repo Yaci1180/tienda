@@ -25,4 +25,10 @@ public class Concesionaria {
             cascade = CascadeType.ALL,
             mappedBy = "concesionaria")
     private List<Auto> autos;
+
+    @OneToMany(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            mappedBy = "concesionariaDondeTrabaja")
+    private List<Cliente> clientes;
 }
+
