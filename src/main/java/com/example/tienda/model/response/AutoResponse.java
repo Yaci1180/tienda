@@ -3,7 +3,6 @@ package com.example.tienda.model.response;
 import lombok.*;
 
 @Builder@Getter @Setter @NoArgsConstructor@AllArgsConstructor
-
 public class AutoResponse {
 
     private Long id;
@@ -13,5 +12,4 @@ public class AutoResponse {
     private int kilometraje;
     private double precioOriginal;
     private double precioVenta;
-
 }

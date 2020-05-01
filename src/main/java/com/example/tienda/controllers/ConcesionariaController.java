@@ -3,20 +3,17 @@ package com.example.tienda.controllers;
 import com.example.tienda.exceptions.ResourceNotFoundException;
 import com.example.tienda.model.Auto;
 import com.example.tienda.model.Concesionaria;
-import com.example.tienda.model.Contrato;
 import com.example.tienda.model.Empleado;
 import com.example.tienda.model.request.ConcesionariaRequest;
 import com.example.tienda.model.response.ConcesionariaResponse;
 import com.example.tienda.services.ConcesionariaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/concesionarias")
@@ -76,5 +73,4 @@ public class ConcesionariaController {
                 .empleadosIds(empleadosIds)
                 .build();
     }
-
 }

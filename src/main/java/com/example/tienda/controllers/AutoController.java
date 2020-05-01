@@ -3,12 +3,9 @@ package com.example.tienda.controllers;
 import com.example.tienda.exceptions.ResourceNotFoundException;
 import com.example.tienda.model.Auto;
 import com.example.tienda.model.Concesionaria;
-import com.example.tienda.model.Empleado;
 import com.example.tienda.model.enums.TipoDeAuto;
-import com.example.tienda.model.enums.TipoDeEstado;
 import com.example.tienda.model.request.AutoRequest;
 import com.example.tienda.model.response.AutoResponse;
-import com.example.tienda.repositories.AutoRepository;
 import com.example.tienda.services.AutoService;
 import com.example.tienda.services.ConcesionariaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,9 +48,7 @@ public class AutoController {
                 .build();
 
         return ResponseEntity.ok(parseAutoResponse(autoService.saveAuto(auto)));
-
     }
-
 
     @GetMapping("/verAuto")
     public ResponseEntity<AutoResponse> verAuto(@RequestBody AutoRequest autoRequest) {
@@ -95,5 +90,4 @@ public class AutoController {
                 .concesionariaId(auto.getConcesionaria().getId())
                 .build();
     }
-
 }

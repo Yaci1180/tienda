@@ -27,5 +27,4 @@ public class ContratoServiceImpl implements ContratoService {
     public Optional<Contrato> findByNumeroDeContrato(Long numerDeContrato) {
         return contratoRepository.findByNumeroDeContrato(numerDeContrato);
     }
-
 }

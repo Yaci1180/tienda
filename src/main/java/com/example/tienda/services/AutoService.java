@@ -14,5 +14,4 @@ public interface AutoService {
     Optional<Auto>findById(Long id);
     void deleteAuto(Auto auto);
     double calcularPrecioVenta(Auto auto);
-
 }

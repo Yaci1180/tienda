@@ -10,5 +10,4 @@ public class ContratoResponse {
     private int fecha;
     private String nombreContrato;
     private Long autoId;
-
 }

@@ -26,5 +26,4 @@ public class Contrato {
             cascade =  CascadeType.ALL,
             mappedBy = "cliente")
     private Cliente cliente;
-
 }

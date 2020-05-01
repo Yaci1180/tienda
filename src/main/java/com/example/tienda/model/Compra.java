@@ -15,7 +15,7 @@ public class Compra {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long numerDeCompras;
+    private Long numerDeCompra;
     private double precioTotalCompra;
 
     @ManyToOne(fetch = FetchType.LAZY,
@@ -29,7 +29,6 @@ public class Compra {
             optional = false)
     @JoinColumn(name = "tarjeta_id", nullable = false)
     private Tarjeta tarjeta;;
-
     //muchos a uno cliente ??? *
     //Muchos a uno tarjeta ??? *
 }

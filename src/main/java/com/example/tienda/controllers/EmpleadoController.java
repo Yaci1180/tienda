@@ -1,16 +1,13 @@
 package com.example.tienda.controllers;
 
 import com.example.tienda.exceptions.ResourceNotFoundException;
-import com.example.tienda.model.Auto;
 import com.example.tienda.model.Concesionaria;
 import com.example.tienda.model.Empleado;
 import com.example.tienda.model.request.EmpleadoRequest;
 import com.example.tienda.model.response.EmpleadoResponse;
-import com.example.tienda.repositories.EmpleadoRepository;
 import com.example.tienda.services.ConcesionariaService;
 import com.example.tienda.services.EmpleadoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

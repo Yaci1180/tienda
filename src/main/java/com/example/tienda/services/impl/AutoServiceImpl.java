@@ -66,9 +66,9 @@ public class AutoServiceImpl implements AutoService {
             precioVentaFinal = precioVenta - auto.getPrecioOriginal() * 0.25;
 
         }
-
-        auto.setPrecioVenta(precioVentaFinal);
-        return precioVentaFinal;
-        }
+    auto.setPrecioVenta(precioVentaFinal);
+    return precioVentaFinal;
     }
+}
+
 

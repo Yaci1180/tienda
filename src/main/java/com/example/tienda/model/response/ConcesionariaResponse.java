@@ -1,10 +1,10 @@
 package com.example.tienda.model.response;
 
-import lombok.Builder;
+import lombok.*;
 
 import java.util.List;
 
-@Builder
+@Builder @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class ConcesionariaResponse {
 
     private Long id;
