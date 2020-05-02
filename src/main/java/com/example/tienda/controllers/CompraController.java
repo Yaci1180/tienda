@@ -1,15 +1,20 @@
 package com.example.tienda.controllers;
 
+import com.example.tienda.exceptions.ResourceNotFoundException;
 import com.example.tienda.model.Compra;
+import com.example.tienda.model.Empleado;
+import com.example.tienda.model.Tarjeta;
 import com.example.tienda.model.request.CompraRequest;
+import com.example.tienda.model.request.EmpleadoRequest;
 import com.example.tienda.model.response.CompraResponse;
+import com.example.tienda.model.response.EmpleadoResponse;
 import com.example.tienda.services.CompraService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/compra")
@@ -40,5 +45,31 @@ public class CompraController {
                 .numeroDeCompra(compra.getNumerDeCompra())
                 .precioTotalCompra(compra.getNumerDeCompra())
                 .build();
+    }
+
+    @GetMapping("/verCompra")
+    public ResponseEntity<CompraResponse> verCompras(@RequestBody CompraRequest compraRequest) {
+        Optional<Compra> compra = compraService.findByNumeroDeCompra(compraRequest.getNumerDeCompra());
+        if (!compra.isPresent()) {
+            throw new ResourceNotFoundException("Empleado no encontrado con el dni: " + compraRequest.getNumerDeCompra());
+        }
+
+        return ResponseEntity.ok(parseCompraResponse(compra.get()));
+    }
+
+    @PutMapping("/actualizarCompra")
+    public ResponseEntity<CompraResponse> actualizarCompra(@RequestBody @Valid CompraRequest compraRequest) {
+        Optional<Compra> compraOptional = compraService.findByNumeroDeCompra(compraRequest.getNumerDeCompra());
+        if (!compraOptional.isPresent()) {
+            throw new ResourceNotFoundException("Compra inexistente");
+        }
+
+        Compra compra = compraOptional.get();
+        compra.setNumerDeCompra(compraOptional.get().getNumerDeCompra());
+        compra.setPrecioTotalCompra(compraOptional.get().getPrecioTotalCompra());
+
+        compraService.saveCompra(compra);
+
+        return ResponseEntity.ok(parseCompraResponse(compraService.saveCompra(compra)));
     }
 }

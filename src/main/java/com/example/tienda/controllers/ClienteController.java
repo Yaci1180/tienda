@@ -23,7 +23,7 @@ public class ClienteController {
     }
 
     @PutMapping(value = "/saveCliente")
-    public ResponseEntity<ClienteResponse> saveClinte(@RequestBody ClienteRequest clienteRequest){
+    public ResponseEntity<ClienteResponse> saveCliente(@RequestBody ClienteRequest clienteRequest){
 
         Cliente cliente = Cliente.builder()
                 .nombre(clienteRequest.getNombre())

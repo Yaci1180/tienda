@@ -23,10 +23,6 @@ public class Cliente {
     @JoinColumn(name = "concesionaria_id", nullable = false)
     private Concesionaria concesionariaDondeTrabaja;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "cliente_id")
-    private Contrato contrato;
-
     @OneToMany(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             mappedBy = "cliente")

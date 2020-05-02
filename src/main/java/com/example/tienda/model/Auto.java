@@ -35,6 +35,6 @@ public class Auto {
     private Concesionaria concesionaria;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "contrato_id")
-    private Contrato contrato;
+    @JoinColumn(name = "compra_id")
+    private Compra compra;
 }

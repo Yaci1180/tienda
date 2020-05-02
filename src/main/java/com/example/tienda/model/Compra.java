@@ -1,10 +1,8 @@
 package com.example.tienda.model;
 
-
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "compras")
@@ -28,7 +26,10 @@ public class Compra {
             cascade = CascadeType.PERSIST,
             optional = false)
     @JoinColumn(name = "tarjeta_id", nullable = false)
-    private Tarjeta tarjeta;;
+    private Tarjeta tarjeta;
+
+    @OneToOne(mappedBy = "compra")
+    private Auto auto;
     //muchos a uno cliente ??? *
     //Muchos a uno tarjeta ??? *
 }

@@ -1,6 +1,5 @@
 package com.example.tienda.model;
 
-import com.example.tienda.model.enums.TipoDeEstado;
 import com.example.tienda.model.enums.TipoDeTarjeta;
 import lombok.*;
 
