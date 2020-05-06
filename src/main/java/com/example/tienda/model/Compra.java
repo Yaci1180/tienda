@@ -19,19 +19,11 @@ public class Compra {
     @ManyToOne(fetch = FetchType.LAZY,
             cascade = CascadeType.PERSIST,
             optional = false)
-    @JoinColumn(name = "cliente_id", nullable = false)
-    private Cliente cliente;
-
-    @ManyToOne(fetch = FetchType.LAZY,
-            cascade = CascadeType.PERSIST,
-            optional = false)
     @JoinColumn(name = "tarjeta_id", nullable = false)
     private Tarjeta tarjeta;
 
     @OneToOne(mappedBy = "compra")
     private Auto auto;
-    //muchos a uno cliente ??? *
-    //Muchos a uno tarjeta ??? *
 }
 
 

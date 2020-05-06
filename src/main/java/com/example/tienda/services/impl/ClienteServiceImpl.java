@@ -22,7 +22,7 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public Optional<Cliente> findByDni(int dni) {
-        return clienteRepository.findByDni(dni);
+    public Optional<Cliente> findById(Long clienteId) {
+        return clienteRepository.findById(clienteId);
     }
 }

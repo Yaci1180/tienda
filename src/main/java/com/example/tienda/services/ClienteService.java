@@ -7,5 +7,5 @@ import java.util.Optional;
 public interface ClienteService {
 
     Cliente saveCliente(Cliente cliente);
-    Optional<Cliente> findByDni(int dni);
+    Optional<Cliente> findById(Long clienteId);
 }

@@ -2,6 +2,8 @@ package com.example.tienda.controllers;
 
 import com.example.tienda.exceptions.ResourceNotFoundException;
 import com.example.tienda.model.Auto;
+import com.example.tienda.model.Cliente;
+import com.example.tienda.model.Concesionaria;
 import com.example.tienda.model.Tarjeta;
 import com.example.tienda.model.enums.TipoDeAuto;
 import com.example.tienda.model.enums.TipoDeEstado;
@@ -10,6 +12,7 @@ import com.example.tienda.model.request.AutoRequest;
 import com.example.tienda.model.request.TarjetaRequest;
 import com.example.tienda.model.response.AutoResponse;
 import com.example.tienda.model.response.TarjetaResponse;
+import com.example.tienda.services.ClienteService;
 import com.example.tienda.services.TarjetaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,20 +27,25 @@ import java.util.Optional;
 public class TarjetaController {
 
     private final TarjetaService tarjetaService;
+    private final ClienteService clienteService;
+
 
     @Autowired
-    public TarjetaController(TarjetaService tarjetaService) {
+    public TarjetaController(TarjetaService tarjetaService, ClienteService clienteService) {
         this.tarjetaService = tarjetaService;
+        this.clienteService = clienteService;
     }
 
-    @PutMapping(value = "/saveCompra")
-    public ResponseEntity<TarjetaResponse> saveTajeta(@RequestBody TarjetaRequest tarjetaRequest) {
-
+    @PutMapping(value = "/saveTarjeta")
+    public ResponseEntity<TarjetaResponse> saveTajeta(@RequestBody TarjetaRequest tarjetaRequest, Long clienteId) {
+        Optional<Cliente> clienteOptional = clienteService
+                .findById(clienteId);
+        if (!clienteOptional.isPresent()){
+            throw new ResourceNotFoundException("Cliente inexistente");
+        }
         Tarjeta tarjeta = Tarjeta.builder()
-                .nombreDuenoTarjeta(tarjetaRequest.getNombreDuenoTarjeta())
                 .numeroDeLaTarjeta(tarjetaRequest.getNumeroDeLaTarjeta())
                 .fechaDeVencimiento(tarjetaRequest.getFechaDeVencimiento())
-                .cuotas(tarjetaRequest.getCuotas())
                 .build();
 
         tarjetaService.saveTarjeta(tarjeta);
@@ -68,11 +76,8 @@ public class TarjetaController {
 
     private TarjetaResponse parseTarjetaResponse(Tarjeta tarjeta) {
         return TarjetaResponse.builder()
-                .nombreDuenoTarjeta(tarjeta.getNombreDuenoTarjeta())
                 .numeroDeLaTarjeta(tarjeta.getNumeroDeLaTarjeta())
                 .fechaDeVencimiento(tarjeta.getFechaDeVencimiento())
-                .cuotas(tarjeta.getCuotas())
                 .build();
     }
-
 }

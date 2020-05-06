@@ -26,16 +26,7 @@ public class Cliente {
     @OneToMany(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             mappedBy = "cliente")
-    private List<Compra> compras;
-
-    @OneToMany(fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL,
-            mappedBy = "cliente")
     private List<Tarjeta> tarjetas;
-    //uno a muchos compras??? *
-    // muchos a uno concecionaria??? *
-    // uno a muchos tarjeta ??? *
-    //uno a uno contrato??? *
 }
 
 

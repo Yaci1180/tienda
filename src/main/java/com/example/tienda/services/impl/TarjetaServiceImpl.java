@@ -32,4 +32,7 @@ public class TarjetaServiceImpl implements TarjetaService {
     public List<Tarjeta> findAllByTipoDeTarjeta(TipoDeTarjeta tipoDeTarjeta) {
         return tarjetaRepository.findAllByTipoDeTarjeta(tipoDeTarjeta);
     }
+
+    @Override
+    public
 }

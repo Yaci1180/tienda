@@ -16,10 +16,7 @@ public class Tarjeta {
     private Long id;
 
     private Long numeroDeLaTarjeta;
-    private String nombreDuenoTarjeta;
     private int fechaDeVencimiento;
-    private boolean limiteTarjeta;
-    private int cuotas;
 
     @Enumerated(EnumType.STRING)
     private TipoDeTarjeta tipoDeTarjeta;
@@ -34,6 +31,4 @@ public class Tarjeta {
             cascade = CascadeType.ALL,
             mappedBy = "cliente")
     private List<Compra> compras;
-    // muchoas a uno cliente ??? *
-    //uno a muchos compras ??? *
 }

@@ -54,21 +54,28 @@ public class AutoServiceImpl implements AutoService {
 
         double precioVentaFinal;
         if (auto.getTipoDeEstado() == BUENO) {
-            double precioVenta = auto.getPrecioOriginal() - (auto.getPrecioOriginal() *((int) (auto.getKilometraje() /50000)) * 0.03);
+            double precioVenta = auto.getPrecioOriginal() - (auto.getPrecioOriginal() * ((int) (auto.getKilometraje() / 50000)) * 0.03);
             precioVentaFinal = precioVenta - auto.getPrecioOriginal() * 0.10;
 
         } else if (auto.getTipoDeEstado() == MEDIO) {
-            double precioVenta = auto.getPrecioOriginal() - (auto.getPrecioOriginal() *((int) (auto.getKilometraje() /50000)) * 0.03);
+            double precioVenta = auto.getPrecioOriginal() - (auto.getPrecioOriginal() * ((int) (auto.getKilometraje() / 50000)) * 0.03);
             precioVentaFinal = precioVenta - auto.getPrecioOriginal() * 0.15;
 
         } else {
-            double precioVenta = auto.getPrecioOriginal() - (auto.getPrecioOriginal() *((int) (auto.getKilometraje() /50000))* 0.03);
+            double precioVenta = auto.getPrecioOriginal() - (auto.getPrecioOriginal() * ((int) (auto.getKilometraje() / 50000)) * 0.03);
             precioVentaFinal = precioVenta - auto.getPrecioOriginal() * 0.25;
 
         }
-    auto.setPrecioVenta(precioVentaFinal);
-    return precioVentaFinal;
+        auto.setPrecioVenta(precioVentaFinal);
+        return precioVentaFinal;
     }
 }
+    /* APLICAR descuentoPorTipoTarjeta AL PRECIO FINAL POR EL TIPO DE TARJETA
+       APLICAR METODO DE CUOTAS??? (CADA X CANTIDAD DE CUOTAS SE LE SUMA AL PRECIO FINAL UNA % (COMO CARAJO SERA??)
+
+
+       ¿¿TIENE SENTIDO APLICAR DESCUENTO POR TIPO DE TARJETA? Y CON EL METODO CUOTAS SUMARLE UN %???
+     */
+
 
 

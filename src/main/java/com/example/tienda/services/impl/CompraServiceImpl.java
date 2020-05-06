@@ -1,6 +1,7 @@
 package com.example.tienda.services.impl;
 
 import com.example.tienda.model.Compra;
+import com.example.tienda.model.request.CompraRequest;
 import com.example.tienda.repositories.CompraRepository;
 import com.example.tienda.services.CompraService;
 import org.springframework.beans.factory.annotation.Autowired;

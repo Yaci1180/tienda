@@ -2,18 +2,14 @@ package com.example.tienda.controllers;
 
 import com.example.tienda.exceptions.ResourceNotFoundException;
 import com.example.tienda.model.Compra;
-import com.example.tienda.model.Empleado;
-import com.example.tienda.model.Tarjeta;
 import com.example.tienda.model.request.CompraRequest;
-import com.example.tienda.model.request.EmpleadoRequest;
 import com.example.tienda.model.response.CompraResponse;
-import com.example.tienda.model.response.EmpleadoResponse;
+import com.example.tienda.model.response.TarjetaResponse;
 import com.example.tienda.services.CompraService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
@@ -24,20 +20,25 @@ public class CompraController {
 
     @Autowired
     public CompraController(CompraService compraService) {
+
         this.compraService = compraService;
     }
 
     @PutMapping(value = "/saveCompra")
-    public ResponseEntity<CompraResponse> saveCompra(@RequestBody CompraRequest compraRequest){
+    public ResponseEntity<CompraResponse> saveCompra(@RequestBody CompraRequest compraRequest ){
 
-        Compra compra = Compra.builder()
-                .numerDeCompra(compraRequest.getNumerDeCompra())
-                .precioTotalCompra(compraRequest.getNumerDeCompra())
+        Compra compra = compraService.saveCompra(compraRequest);
+
+        TarjetaResponse tarjeta = TarjetaResponse.builder()
+                .numeroDeLaTarjeta(compra.getTarjeta().getNumeroDeLaTarjeta())
+                .fechaDeVencimiento(compra.getTarjeta().getFechaDeVencimiento())
                 .build();
 
-        compraService.saveCompra(compra);
+        CompraResponse response = CompraResponse.builder()
+                .tarjeta(tarjeta)
+                .build();
 
-        return ResponseEntity.ok(parseCompraResponse(compraService.saveCompra(compra)));
+        return ResponseEntity.ok(response);
     }
 
     private CompraResponse parseCompraResponse(Compra compra) {
@@ -55,21 +56,5 @@ public class CompraController {
         }
 
         return ResponseEntity.ok(parseCompraResponse(compra.get()));
-    }
-
-    @PutMapping("/actualizarCompra")
-    public ResponseEntity<CompraResponse> actualizarCompra(@RequestBody @Valid CompraRequest compraRequest) {
-        Optional<Compra> compraOptional = compraService.findByNumeroDeCompra(compraRequest.getNumerDeCompra());
-        if (!compraOptional.isPresent()) {
-            throw new ResourceNotFoundException("Compra inexistente");
-        }
-
-        Compra compra = compraOptional.get();
-        compra.setNumerDeCompra(compraOptional.get().getNumerDeCompra());
-        compra.setPrecioTotalCompra(compraOptional.get().getPrecioTotalCompra());
-
-        compraService.saveCompra(compra);
-
-        return ResponseEntity.ok(parseCompraResponse(compraService.saveCompra(compra)));
     }
 }
