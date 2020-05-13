@@ -1,5 +1,6 @@
 package com.example.tienda.model;
 
+import com.example.tienda.model.enums.TipoDeTarjeta;
 import lombok.*;
 
 import javax.persistence.*;
@@ -15,6 +16,11 @@ public class Compra {
 
     private Long numerDeCompra;
     private double precioTotalCompra;
+    private int cuota;
+    private int porcentaje;
+
+    @Enumerated(EnumType.STRING)
+    private TipoDeTarjeta tipoDeTarjeta;
 
     @ManyToOne(fetch = FetchType.LAZY,
             cascade = CascadeType.PERSIST,

@@ -1,5 +1,6 @@
 package com.example.tienda.services.impl;
 
+import com.example.tienda.model.Compra;
 import com.example.tienda.model.Tarjeta;
 import com.example.tienda.model.enums.TipoDeTarjeta;
 import com.example.tienda.repositories.TarjetaRepository;
@@ -32,7 +33,4 @@ public class TarjetaServiceImpl implements TarjetaService {
     public List<Tarjeta> findAllByTipoDeTarjeta(TipoDeTarjeta tipoDeTarjeta) {
         return tarjetaRepository.findAllByTipoDeTarjeta(tipoDeTarjeta);
     }
-
-    @Override
-    public
 }

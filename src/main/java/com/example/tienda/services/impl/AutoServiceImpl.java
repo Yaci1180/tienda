@@ -53,6 +53,12 @@ public class AutoServiceImpl implements AutoService {
     public double calcularPrecioVenta(Auto auto) {
 
         double precioVentaFinal;
+
+        /* estoy asumiendo que la compra si o si se realiza con una tarjeta aun no existe la posibilidad de realizar una compra
+        solo en efectivo, por lo tanto no valido si la compra es con tarjeta o no si no con que tipo d tarjeta se realiza la compra
+         entonces le tendria que aplicar al tipo de tarjeta el correspondiente porcentaje de descuento*/
+
+
         if (auto.getTipoDeEstado() == BUENO) {
             double precioVenta = auto.getPrecioOriginal() - (auto.getPrecioOriginal() * ((int) (auto.getKilometraje() / 50000)) * 0.03);
             precioVentaFinal = precioVenta - auto.getPrecioOriginal() * 0.10;
@@ -66,6 +72,7 @@ public class AutoServiceImpl implements AutoService {
             precioVentaFinal = precioVenta - auto.getPrecioOriginal() * 0.25;
 
         }
+
         auto.setPrecioVenta(precioVentaFinal);
         return precioVentaFinal;
     }
@@ -74,7 +81,7 @@ public class AutoServiceImpl implements AutoService {
        APLICAR METODO DE CUOTAS??? (CADA X CANTIDAD DE CUOTAS SE LE SUMA AL PRECIO FINAL UNA % (COMO CARAJO SERA??)
 
 
-       ¿¿TIENE SENTIDO APLICAR DESCUENTO POR TIPO DE TARJETA? Y CON EL METODO CUOTAS SUMARLE UN %???
+
      */
 
 

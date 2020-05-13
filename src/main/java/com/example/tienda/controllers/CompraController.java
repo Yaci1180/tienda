@@ -1,8 +1,11 @@
 package com.example.tienda.controllers;
 
 import com.example.tienda.exceptions.ResourceNotFoundException;
+import com.example.tienda.model.Cliente;
 import com.example.tienda.model.Compra;
 import com.example.tienda.model.request.CompraRequest;
+import com.example.tienda.model.request.TarjetaRequest;
+import com.example.tienda.model.response.ClienteResponse;
 import com.example.tienda.model.response.CompraResponse;
 import com.example.tienda.model.response.TarjetaResponse;
 import com.example.tienda.services.CompraService;
@@ -25,20 +28,18 @@ public class CompraController {
     }
 
     @PutMapping(value = "/saveCompra")
-    public ResponseEntity<CompraResponse> saveCompra(@RequestBody CompraRequest compraRequest ){
+    public ResponseEntity<CompraResponse> saveCompra(@RequestBody CompraRequest compraRequest){
 
-        Compra compra = compraService.saveCompra(compraRequest);
+            Compra compra = Compra.builder()
+                    .numerDeCompra(compraRequest.getNumerDeCompra())
+                    .precioTotalCompra(compraRequest.getPrecioTotalCompra())
+                    .cuota(compraRequest.getCuota())
+                    .tarjeta(compraRequest.getTarjeta())
+                    .build();
 
-        TarjetaResponse tarjeta = TarjetaResponse.builder()
-                .numeroDeLaTarjeta(compra.getTarjeta().getNumeroDeLaTarjeta())
-                .fechaDeVencimiento(compra.getTarjeta().getFechaDeVencimiento())
-                .build();
+            compraService.saveCompra(compra);
 
-        CompraResponse response = CompraResponse.builder()
-                .tarjeta(tarjeta)
-                .build();
-
-        return ResponseEntity.ok(response);
+            return ResponseEntity.ok(parseCompraResponse(compraService.saveCompra(compra)));
     }
 
     private CompraResponse parseCompraResponse(Compra compra) {

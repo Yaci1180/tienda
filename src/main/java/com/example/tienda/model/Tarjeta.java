@@ -18,9 +18,6 @@ public class Tarjeta {
     private Long numeroDeLaTarjeta;
     private int fechaDeVencimiento;
 
-    @Enumerated(EnumType.STRING)
-    private TipoDeTarjeta tipoDeTarjeta;
-
     @ManyToOne(fetch = FetchType.LAZY,
             cascade = CascadeType.PERSIST,
             optional = false)
